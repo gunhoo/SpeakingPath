@@ -53,7 +53,7 @@ def myWhisper():
             answer = answer.replace(',', '')
             answer = answer.replace('?', '')
             answer = answer.replace('.', '')
-
+            answer = answer.replace(' ', '')
             wav_file_path = "pcmToWav.wav"
 
             audio_data = base64.b64decode(pcm_file_path)
