@@ -358,7 +358,7 @@ function PronStart(props) {
             }).then(response => {
               console.log('predict : ', response.data.predict)
               console.log('accuracy : ', response.data.accuracy)
-              if(response.data.accuracy > 0.3){
+              if(response.data.accuracy > 0.65){
             //   if(response.data.accuracy < 1){
                 setIsSuccess(true)
               } else{
