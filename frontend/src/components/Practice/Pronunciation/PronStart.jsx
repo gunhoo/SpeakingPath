@@ -338,7 +338,6 @@ function PronStart(props) {
         }
     }
 
-
     const sendAudioToServer = async () => {
         // const sttServer = axios.create({ baseURL: "http://localhost:5001" })
         try {
@@ -347,20 +346,19 @@ function PronStart(props) {
           reader.readAsDataURL(audioBlobRef.current);
     
           reader.onload = async () => {
-            const base64Audio = reader.result.split(',')[1]; // Extract base64 data
+              const base64Audio = reader.result.split(',')[1]; // Extract base64 data
     
             // Send Base64 audio to the server
             const sttServer = axios.create({ baseURL: "https://i9c109.p.ssafy.io:5001" });
-            await sttServer.post('/stt/result', {
+            await sttServer.post('/stt/whisper', {
               file: base64Audio,
             //   answer: answer.objName,
                 answer : currentContent
               // format: 'pcm'
             }).then(response => {
-              console.log('result : ', response.data.result) 
               console.log('predict : ', response.data.predict)
               console.log('accuracy : ', response.data.accuracy)
-              if(response.data.accuracy > 0.3){
+              if(response.data.accuracy > 0.65){
             //   if(response.data.accuracy < 1){
                 setIsSuccess(true)
               } else{
@@ -417,7 +415,7 @@ function PronStart(props) {
 
                 <div className={styles.questionSection}>
                     <div>
-                        <ArrowBackIosNewIcon sx={{ fontSize: 40, color: blue[600] }} onClick={Prev} />
+                        <ArrowBackIosNewIcon sx={{ fontSize: 50, color: blue[600] }} onClick={Prev} />
                     </div>
                     {/* 제시어 */}
                     {/* <p ref={contentRef} className={styles.question}>
@@ -425,7 +423,7 @@ function PronStart(props) {
                     </p> */}
                         <p className={styles.question}>{currentContent}</p>
                     <div>
-                        <ArrowForwardIosIcon sx={{ fontSize: 40, color: blue[600] }} onClick={Next} />
+                        <ArrowForwardIosIcon sx={{ fontSize: 50, color: blue[600] }} onClick={Next} />
                     </div>
                 </div>
 
@@ -435,7 +433,7 @@ function PronStart(props) {
                         {/* <div className='container'> */}
                         <div className={`${styles.guide}`}>
                             <div className={styles.title}> 따라하기</div>
-                            <video ref={guideVideoRef} style={{ height: '45vh', width: '30vw' }} autoPlay controls>
+                            <video ref={guideVideoRef} style={{ height: '45vh', width: '35vw' }} autoPlay controls>
                                 no video available
                             </video>
                             {/* {showTimer ? (
