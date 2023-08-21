@@ -79,7 +79,6 @@ public class OAuthService {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserEmail());
         userDto.setUserEmail(user.getUserEmail());
-        userDto.setUserPhone(user.getUserPhone());
         userDto.setUserName(user.getUserName());
         userDto.setUserSex(user.getUserSex());
         userDto.setUserGrade("USER");
