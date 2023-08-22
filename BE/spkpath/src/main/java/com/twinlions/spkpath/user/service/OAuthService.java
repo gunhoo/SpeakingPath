@@ -65,11 +65,10 @@ public class OAuthService {
         String email = getUserInfo(accessToken).get("email").asText();
         String id = getUserInfo(accessToken).get("id").asText();
         String sex = getUserInfo(accessToken).get("gender").asText();
-        String mobile = getUserInfo(accessToken).get("mobile").asText();
         String name = getUserInfo(accessToken).get("name").asText();
 
         // DB정보 확인 -> 없으면 DB에 저장
-        User user = registerUserIfNeed(id, email, sex, mobile, name);
+        User user = registerUserIfNeed(id, email, sex, name);
 
         // JWT 토큰 리턴 & 로그인 처리
         String jwtToken = "Bearer "+usersAuthorizationInput(user);
@@ -80,7 +79,6 @@ public class OAuthService {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserEmail());
         userDto.setUserEmail(user.getUserEmail());
-        userDto.setUserPhone(user.getUserPhone());
         userDto.setUserName(user.getUserName());
         userDto.setUserSex(user.getUserSex());
         userDto.setUserGrade("USER");
@@ -99,11 +97,10 @@ public class OAuthService {
         String email = jsonNode.get("email").asText();
         String id = jsonNode.get("id").asText();
         String sex = jsonNode.get("gender").asText();
-        String mobile = jsonNode.get("mobile").asText();
         String name = jsonNode.get("name").asText();
 
         // DB정보 확인 -> 없으면 DB에 저장
-        User user = registerUserIfNeed(id, email, sex, mobile, name);
+        User user = registerUserIfNeed(id, email, sex,  name);
 
         // JWT 토큰 리턴 & 로그인 처리
         String jwtToken = "Bearer "+usersAuthorizationInput(user);
@@ -114,7 +111,6 @@ public class OAuthService {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
         userDto.setUserEmail(user.getUserEmail());
-        userDto.setUserPhone(user.getUserPhone());
         userDto.setUserName(user.getUserName());
         userDto.setUserSex(user.getUserSex());
         userDto.setUserGrade("USER");
@@ -202,7 +198,7 @@ public class OAuthService {
     }
 
     // DB정보 확인 -> 없으면 DB에 저장
-    private User registerUserIfNeed(String id, String email, String sex, String mobile, String name) {
+    private User registerUserIfNeed(String id, String email, String sex, String name) {
         // DB에 중복된 이메일 있는지 확인
         Optional<User> user = userRepository.findByUserId(id);
 
@@ -210,7 +206,6 @@ public class OAuthService {
             // DB에 정보 등록
             User newUser = User.builder()
                     .userId(id)
-                    .userPhone(mobile)
                     .userName(name)
                     .userSex(sex)
                     .userGrade("USER")
